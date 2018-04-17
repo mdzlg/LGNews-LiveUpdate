@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>LG News - Live update</title>
+</head>
+<body>
+    <header>
+        <h1>LG News - Live update</h1>
+    </header>
+
+    <div id="shares"></div>
+    <button id="send_notaid" type="button">Send Nota ID and Get Shares</button>
+
+    <p>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </p>
+
+    <section>
+        <div id="change_username">
+            <input id="username" type="text" />
+            <button id="send_username" type="button">Change username</button>
+        </div>
+    </section>
+    <section id="chatroom">
+        <section id="feedback"></section>
+    </section>
+    <section id="input_zone"> 
+        <input id="message" class="vertical-align" type="text" />
+        <button id="send_message" class="vertical-align" type="button">Send</button>
+    </section>
+
+    <script type="text/javascript" src="socket.io.js"></script>
+    <script type="text/javascript" src="jquery-latest.min.js"></script>
+    <script type="text/javascript" src="chat.js"></script>
+</body>
+</html>
