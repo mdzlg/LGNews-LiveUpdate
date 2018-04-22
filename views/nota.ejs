@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>LG News - Live update</title>
+</head>
+<body>
+    <h1>LG News - Live update</h1>
+
+    <button id="share" type="button">Send share event</button>
+    <div id="shareCount"></div>
+
+    <p><br><br><br></p>
+
+    <textarea name="" id="commentsTextarea" cols="30" rows="10" placeholder="Escribe su comentario..."></textarea>
+
+    <div id="commentsAlert"></div>
+
+    <div id="commentsBox">
+        <p>
+            <strong>Carlos Perez</strong> - #3 - Hace 3 hs<br>
+            Averiguen si esos provedores amigod y parientes tenian los papeles en orden para ser provedores de la provincia.<br>
+            Like: 10 - Unlike: 5
+        </p>
+        <p>
+            <strong>Nelida Quiroga</strong> - Verified - #2 - Hace 3 hs<br>
+            Si nombró al ex gobernador y al actual, porque no se lo cita para que den testimonio de las ampliaciones que hicieron en sus mansiones con dinero que no era se su sueldo?<br>
+            Like: 18 - Unlike: 1
+        </p>
+        <p>
+            <strong>Eduardo Angel Herrera</strong> - Verified - #1 - Hace 4 hs<br>
+            ¿Que culpa puede tener éste pobre hombre si estaba apurado por comprar y todos los que le podían vender eran conocidos o parientes suyos? su único delito fue haber sido demasiado confiado, haber creído que nunca tendría que rendir cuentas si hacía las cosas tal cuál se le ordenaba desde San Martín y 25 de Mayo<br>
+            Like: 8 - Unlike: 0
+        </p>
+        <p style="padding: 0 0 0 30px;">
+            <strong>Luis Romero</strong> - Verified - #4 - Hace 1 hs<br>
+            Siguiendo tu relato: O, será cierto la leyenda urbana que enterado Jodé de la casa que construyó en Raco x envidia le soltó la mano???<br>
+            Like: 0 - Unlike: 0
+        </p>
+    </div>
+
+    <script type="text/javascript" src="/socket.io.js"></script>
+    <script type="text/javascript" src="/LiveUpdate.js"></script>
+</body>
+</html>

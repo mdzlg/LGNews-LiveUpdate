@@ -5,45 +5,90 @@ const app = express()
 app.set('view engine', 'ejs') //set the template engine ejs
 app.use(express.static('public')) //middlewares
 app.get('/', (req, res) => { //routes
-    res.render('index')
+    res.render('nota')
+})
+app.get('/nota/:notaId', (req, res) => {
+    res.render('nota')
+    //var notaId = req.params.notaId
 })
 
-server = app.listen(3000) //Listen on port 3000
+server = app.listen(3000, () =>{ console.log('Server: http://localhost:3000') }) //Listen on port 3000
 
-axios.defaults.baseURL = 'http://dev.lagacetand.com.ar/LG-News-LiveUpdate/demo_data/';
+axios.defaults.baseURL = 'http://localhost:3000/demo_data/';
 
 const io = require("socket.io")(server) //socket.io instantiation
 
 io.on('connection', (socket) => { //listen on every connection
 
-    console.log('New connection - ' + 'Socket ID: ' + socket.id)
+    var notaId = socket.handshake.query['notaId']
 
-    //const apiurl = 'http://dev.lagacetand.com.ar/LG-News-LiveUpdate/demo_data/'
+    //console.log('New connection - ' + 'Socket ID: ' + socket.id)
+    console.log('New connection - ' + 'Socket ID: ' + socket.id + ' - Nota ID: ' + notaId)
+    //console.log(socket)
 
-    //listen on notaid
-    socket.on('notaid', (data) => {
-        //socket.notaid = data.notaid
-        //shares = Math.floor(Math.random() * 100)
-        //shares = JSON.parse(apiurl + 'shares.json?notaid=' + data.notaid)
+    // once a client has connected, we expect to get a ping from them saying what room they want to join
+    socket.on('nota', (notaId) => {
+        socket.join(notaId)
+    })
+
+    //listen on share
+    socket.on('share', (data) => {
+        //socket.notaId = notaId
+        //share = Math.floor(Math.random() * 100)
+        //share = JSON.parse(apiurl + 'share.json?notaId=' + notaId)
 
         axios
-            .get('shares.json', {
+            .get('share.json', {
                 params: {
-                    notaid: data.notaid
+                    notaId: notaId
                 }
             })
             .then(response => {
-                notaid = response.data.notaid
-                shares = response.data.count
-                io.sockets.to(socket.id).emit('update_shares', {shares : shares})
+                //notaId = response.data.notaId
+                shareCount = response.data.count
 
-                console.log('Socket ID: ' + socket.id + ' - Nota ID: ' + notaid + ' - Shares: ' + shares)
-                console.log(shares)
+                //io.sockets.to(socket.id).emit('shareCountUpdate', {shareCount: shareCount})
+                io.sockets.to(notaId).emit('shareCountUpdate', {shareCount: shareCount})
+                //io.sockets.emit('shareCountUpdate', {shareCount: shareCount})
+
+                console.log('Socket ID: ' + socket.id + ' - Nota ID: ' + notaId + ' - ShareCount: ' + shareCount)
             })
             .catch(error => {
                 console.log(error)
             });
     })
+
+    //listen on Comments Typing
+    socket.on('commentsAlert', (data) => {
+        commentsAlert(data.type)
+    })
+
+    function commentsAlert(type) {
+        let message
+
+        switch (type) {
+            case 'commentTyping':
+                message = socket.id + ' esta escribiendo un comentario...'
+                socket.broadcast.to(notaId).emit('commentsAlert', {message: message})
+
+                console.log('Socket ID Typing: ' + socket.id)
+            break;
+            case 'commentsNewCount':
+                message = 'Hay ' + '5' + ' comentarios nuevos...'
+                io.sockets.to(notaId).emit('commentsAlert', {message: message})
+
+                console.log('New comments for display: ' + '5');
+            break;
+            default:
+                console.log('Sorry, no type defined.');
+        }
+    }
+
+
+
+
+
+
 
 
 
@@ -60,10 +105,10 @@ io.on('connection', (socket) => { //listen on every connection
     //listen on new_message
     socket.on('new_message', (data) => {
         //broadcast the new message
-        io.sockets.emit('new_message', {message : data.message, username : socket.username});
+        io.sockets.emit('new_message', {message: data.message, username: socket.username});
     })
     //listen on typing
     socket.on('typing', (data) => {
-        socket.broadcast.emit('typing', {username : socket.username})
+        socket.broadcast.emit('typing', {username: socket.username})
     })
 })
