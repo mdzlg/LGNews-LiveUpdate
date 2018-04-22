@@ -5,14 +5,17 @@ const app = express()
 app.set('view engine', 'ejs') //set the template engine ejs
 app.use(express.static('public')) //middlewares
 app.get('/', (req, res) => { //routes
-    res.render('nota')
+    res.render('index')
 })
 app.get('/nota/:notaId', (req, res) => {
     res.render('nota')
     //var notaId = req.params.notaId
 })
 
-server = app.listen(3000, () =>{ console.log('Server: http://localhost:3000') }) //Listen on port 3000
+//Listen on port 3000
+server = app.listen(3000, () => {
+    console.log('Server: http://localhost:3000')
+})
 
 axios.defaults.baseURL = 'http://localhost:3000/demo_data/';
 
