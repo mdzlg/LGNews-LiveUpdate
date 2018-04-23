@@ -8,14 +8,22 @@
 <body>
     <h1>LG News - Live update</h1>
 
-    <button id="share" type="button">Send share event</button>
+    <a id="share" href="javascript:void(0);">Compartir esta nota</a>
+
     <div id="shareCount"></div>
 
-    <p><br><br><br></p>
+    <p><br><br></p>
 
     <textarea name="" id="commentsTextarea" cols="30" rows="10" placeholder="Escribe su comentario..."></textarea>
 
-    <div id="commentsAlert"></div>
+    <p><br></p>
+
+    <div id="commentsNewRequest" style="display: none;">
+        <div id="commentsNewRequestTxt"></div>
+        <a id="commentsUpdate" href="javascript:void(0);">Mostrar comentarios</a>
+    </div>
+
+    <p><br><br></p>
 
     <div id="commentsBox">
         <p>
