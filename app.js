@@ -1,3 +1,5 @@
+// src: https://medium.com/@noufel.gouirhate/build-a-simple-chat-app-with-node-js-and-socket-io-ea716c093088
+
 const axios = require('axios')
 const express = require('express')
 const app = express()
@@ -62,8 +64,7 @@ io.on('connection', socket => { //listen on every connection
     //Timer for comments New Request
     setTimeout( () => {
         commentsNewRequest()
-    }
-    , 5000)
+    }, 5000)
 
     function commentsNewRequest() {
         //message = 'Hay ' + '5' + ' comentarios nuevos...'
